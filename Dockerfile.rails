@@ -8,7 +8,7 @@ ENV INSTALL_PATH /usr/src/apps
 RUN mkdir -p $INSTALL_PATH
 
 RUN gem install rails bundler
-WORKDIR /usr/src/apps
+WORKDIR $INSTALL_PATH
 
 CMD ["/bin/sh"]
 
