@@ -1,0 +1,15 @@
+# Dockerfile.dev
+
+FROM ruby:2.7.1-alpine
+
+RUN apk add --no-cache --virtual .build-deps bash openssh-client build-base \
+      nodejs postgresql-dev postgresql-client && \
+    apk add --update tzdata && \
+    rm -rf /var/cache/apk/*
+
+ENV APP_PATH /usr/src/app
+RUN mkdir -p $APP_PATH
+WORKDIR $APP_PATH
+
+RUN rm -rf /usr/local/bundle && ln -s /usr/src/app/local/ruby/2.7.1 /usr/local/bundle && \
+    gem install bundler --no-document -i /usr/src/app/local/ruby/2.7.1
