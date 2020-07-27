@@ -1,0 +1,18 @@
+# Dockerfile.rails
+
+FROM ruby:2.7.1-alpine
+
+RUN apk add --no-cache --virtual .build-deps openssh-client build-base
+
+ENV INSTALL_PATH /usr/src/apps
+RUN mkdir -p $INSTALL_PATH
+
+RUN gem install rails bundler
+WORKDIR /usr/src/apps
+
+CMD ["/bin/sh"]
+
+
+# docker build -t rails-toolbox -f Dockerfile.rails .
+
+# docker run -it -v $PWD:/usr/src/apps rails-toolbox rails new --database=postgresql --skip-action-mailer --skip-action-mailbox --skip-action-text --skip-active-storage --skip-action-cable --skip-spring --skip-listen --skip-javascript --skip-turbolinks --skip-test --skip-system-test --skip-bootsnap --skip-bundle --skip-webpack-install courses
