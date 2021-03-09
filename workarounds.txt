@@ -7,8 +7,8 @@
 #   1. Setup adb environment variable to use host adb server
 #     ADB_SERVER_SOCKET=tcp:host.docker.internal:5037
 #
-#   2. Proxy any container port to host port (in example port 30000)
+#   2. Proxy any container port to host port
 #     socat tcp-listen:30000,bind=127.0.0.1,fork tcp:host.docker.internal:30000
 #
-#   3. Run flutter app wih --host-vmservice-port use proxy port value (and --dds-port for flutter > 1.22)
+#   3. Run flutter app wih --host-vmservice-port to forward host-side port to device-side vmservice port (for flutter > 1.22 use --dds-port too)
 #     flutter run --host-vmservice-port=30000 --dds-port=30001 --no-devtools --verbose
