@@ -1,0 +1,8 @@
+FROM cirrusci/flutter:dev
+
+# download missing android platforms
+RUN sdkmanager "build-tools;28.0.3" "platform-tools" "platforms;android-28" "platforms;android-29"
+#  download web and android artifacts
+RUN flutter precache --web --android
+
+RUN apt-get update -y && apt-get install -y socat
