@@ -1,17 +1,14 @@
 # Workaround for using host device/emulator on MacOS from container with Flutter (because docker cant't mount usb on MacOS)
+
 #   On host:
 #   1. connect device or start emulator
-#   2. get adb devices
-#     adb devices  
-#   3. forward host port 30000 to device port 50000 for connecting to VM Service (Dart VM) (ports can be any but we'll use ones below)
-#     adb -s <device-id> forward tcp:30000 tcp:50000
 #
 #   In container: 
-#   1. forward adb port to host adb server
-#     ssh -T -N -f -4 -L5037:localhost:5037 user@host.docker.internal
+#   1. Setup adb environment variable to use host adb server
+#     ADB_SERVER_SOCKET=tcp:host.docker.internal:5037
 #
-#   2. forward vm service port to host
-#     ssh -T -N -f -4 -L30000:localhost:30000 user@host.docker.internal
+#   2. Proxy any container port to host port (in example port 30000)
+#     socat tcp-listen:30000,bind=127.0.0.1,fork tcp:host.docker.internal:30000
 #
-#   3. run flutter app wih --host-vmservice-port
-#     flutter run --host-vmservice-port=30000
+#   3. Run flutter app wih --host-vmservice-port use proxy port value (and --dds-port for flutter > 1.22)
+#     flutter run --host-vmservice-port=30000 --dds-port=30001 --no-devtools --verbose
