@@ -11,9 +11,7 @@ services:
       - .:/usr/src/app
     tty: true
     stdin_open: true
-    ports:
-      # Devtools, web-server device
-      - 9100:9100
+    command: sh -c "socat tcp-listen:30000,bind=127.0.0.1,fork tcp:host.docker.internal:30000 & bash"
 
 # Workaround for using host device/emulator on MacOS from container (because docker cant't mount usb on MacOS)
 #
@@ -28,6 +26,3 @@ services:
 # 
 # Run flutter app wih --host-vmservice-port (and --dds-port for flutter > 1.22)
 # flutter run --host-vmservice-port=30000 --dds-port=30001 --no-devtools --verbose
-#
-# Run Devtools on 0.0.0.0 interface to access from container
-# flutter pub global run devtools --no-launch-browser --host=0.0.0.0
