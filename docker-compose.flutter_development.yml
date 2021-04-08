@@ -26,3 +26,8 @@ services:
 # 
 # Run flutter app wih --host-vmservice-port (and --dds-port for flutter > 1.22)
 # flutter run --host-vmservice-port=30000 --dds-port=30001 --no-devtools --verbose
+# 
+# flutter build apk --target-platform=android-arm64
+# 
+# Run app in development container
+# docker-compose -f ../../scripts/docker-compose.flutter_development.yml --project-directory="$PWD" up --detach
