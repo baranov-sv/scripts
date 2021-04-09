@@ -9,12 +9,12 @@ services:
     working_dir: /usr/src/app
     volumes:
       - .:/usr/src/app
-      - pub_cache:/usr/src/app/.pub-cache
+      - pub-cache:/usr/src/app/.pub-cache
     tty: true
     stdin_open: true
     command: sh -c "socat tcp-listen:30000,bind=127.0.0.1,fork tcp:host.docker.internal:30000 & bash"
 volumes:
-  pub_cache:    
+  pub-cache:    
 
 # Workaround for using host device/emulator on MacOS from container (because docker cant't mount usb on MacOS)
 #
