@@ -14,7 +14,8 @@ services:
     stdin_open: true
     command: sh -c "socat tcp-listen:30000,bind=127.0.0.1,fork tcp:host.docker.internal:30000 & bash"
 volumes:
-  pub-cache:    
+  pub-cache:
+    external: true
 
 # Workaround for using host device/emulator on MacOS from container (because docker cant't mount usb on MacOS)
 #
