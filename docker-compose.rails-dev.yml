@@ -1,0 +1,38 @@
+version: "3.2"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+    volumes:
+      - nfsmount:/usr/src/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    command: /usr/src/app/docker/start_command.sh      
+  db:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: app_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+volumes:
+  nfsmount:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3
+      device: ":${SOURCE_DIR}"
+
