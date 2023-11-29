@@ -1,0 +1,116 @@
+CHEAT SHEETS
+
+
+#### ssh
+
+eval "$(ssh-agent -s)"
+ssh-add --apple-use-keychain ~/.ssh/id_samokat
+
+#### vim
+  G  # Jump To End Of File
+  gg # Jump To Begining Of File
+  v # select characters
+    press d to cut (or y to copy)
+    press P to paste before the cursor, or p to paste after
+    
+
+#### bash 
+
+  # размер файлов/папок в папке
+  du -h ./ | sort -rh | head -10 
+
+  # кол-во оперативы потребляемое процессом
+  pmap <pid> | tail -1
+
+
+#### git
+
+  # rebase the first commit
+  git rebase -i --root
+  
+  # archive
+  git archive --output=/Users/samokat/Downloads/space-ruby-exports-lib.tar.gz --format=tar HEAD
+  
+  # запустить файлы тестов, которые менялись в текущей ветке отпочкованной от мастера
+  git diff --name-only --merge-base master -- '*spec.rb' | xargs -rd\n docker compose run --rm --no-  deps -T app bundle exec rspec --force-color
+
+#### rails
+  # edit encrypted credentials
+  EDITOR=vim rails credentials:edit 
+
+  # Rolling Back After the End of a Session
+  rails console --sandbox
+
+  # Changing Environment
+  rails console -e production 
+
+  # Searching for Methods With grep
+  Game.first.methods.grep(/lumn/)
+
+  # Finding Out a Method’s Location
+  'Luis Vasconcellos'.instance_method|method(:inquiry).source_location
+
+  # Returning the Source Code of a Method
+  'Luis Vasconcellos'.method(:inquiry).source.display
+
+  # The App Object
+  app
+
+  # Helper methods
+  helper 
+  
+  # Listing tables
+  ActiveRecord::Base.connection.tables
+
+  # Пересоздать тестовую БД и накотить все миграции 
+  RAILS_ENV=test bundle exec rails db:create liquibase:migrate 
+
+### rspec
+
+  rspec —-profile 5 # 5 самых медленных тестов
+  rspec —-fail-fast
+  rspec —-only-failures
+  rspec —-next-failure
+  rspec —-tag <tag>
+  rspec —-seed 1821 ???
+  .rspec_local # доп. настроки
+
+  describe , :aggregate_failures # не останавливает проверку после падения первого expect
+
+  использовать Spring чтобы каждый раз не грузить env (например Rails )
+
+  Timecop # для времени
+  travel_to/travel_back
+
+### postgresql
+
+SELECT t_xmin, t_xmax, t_ctid FROM heap_page_items(get_raw_page(‘users’, 0));
+SELECT pg_size_pretty(pg_total_relation_size(‘users’));
+
+### usefull ruby gems
+
+  strong_migrations # проверяет миграции и дает подсказки
+  rubocop # linter
+  reform, active_type # form object
+  dry #
+  test-prof
+  ruby-prof
+  webmock
+  StackProf Sampling CPU Profiler (выдает flamegraph)
+  brakeman
+
+### usefull utities
+
+rbspy Sampling CPU Profiler for Ruby (выдает flamegraph)
+
+### usefull services
+  ### interactive flamegraph visualizer
+  https://www.speedscope.app/
+
+### usefull flutter packeges
+
+  go_route # routing extends Navigator 2
+
+### книжки
+  
+  Владимир Хориков «Принципы Unit-тестирования»
