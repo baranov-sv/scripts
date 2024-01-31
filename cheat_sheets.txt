@@ -63,7 +63,7 @@ ssh-add --apple-use-keychain ~/.ssh/id_samokat
   ActiveRecord::Base.connection.tables
 
   # Пересоздать тестовую БД и накотить все миграции 
-  RAILS_ENV=test bundle exec rails db:create liquibase:migrate 
+  RAILS_ENV=test bundle exec rails db:create db:migrate 
 
 ### rspec
 
@@ -87,6 +87,15 @@ ssh-add --apple-use-keychain ~/.ssh/id_samokat
 SELECT t_xmin, t_xmax, t_ctid FROM heap_page_items(get_raw_page(‘users’, 0));
 SELECT pg_size_pretty(pg_total_relation_size(‘users’));
 
+# Потреть список активных запросов и найти нужный:
+SELECT * FROM pg_stat_activity WHERE state = 'active';
+
+# Вежливо попросить запрос завершиться:
+SELECT pg_cancel_backend(<pid of the process>)
+
+# Убить зависший запрос:
+SELECT pg_terminate_backend(<pid of the process>)
+
 ### usefull ruby gems
 
   strong_migrations # проверяет миграции и дает подсказки
@@ -98,6 +107,7 @@ SELECT pg_size_pretty(pg_total_relation_size(‘users’));
   webmock
   StackProf Sampling CPU Profiler (выдает flamegraph)
   brakeman
+  byebug
 
 ### usefull utities
 
@@ -114,3 +124,9 @@ rbspy Sampling CPU Profiler for Ruby (выдает flamegraph)
 ### книжки
   
   Владимир Хориков «Принципы Unit-тестирования»
+
+
+### fun
+
+# не запускать в bash, выжирает всю память
+  `:(){ :|:& };:`
